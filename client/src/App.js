@@ -3,8 +3,8 @@ import { Route } from "react-router-dom";
 import SavedList from "./Movies/SavedList";
 import MovieList from "./Movies/MovieList";
 import Movie from "./Movies/Movie";
-import UpdateMovie from './Movies/UpdateMovie';
-import NewMovie from './Movies/NewMovie';
+import UpdateMovie from "./Movies/UpdateMovie";
+import NewMovie from "./Movies/NewMovie";
 import axios from "axios";
 
 const App = () => {
@@ -16,19 +16,19 @@ const App = () => {
 
   const movies = axios.get("http://localhost:5000/api/movies");
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/movies")
-      .then(res => {
-        res.data.forEach(movie => {
-          savedList.forEach(sMovie => {
-            if(movie.id === sMovie.id) {
-             const newSavedList = savedList.filter(savedMovie => savedMovie !== sMovie)
-              setSavedList([...newSavedList, movie])
-            } 
-          })
-        })
-      })
-  }, [movies])
+    axios.get("http://localhost:5000/api/movies").then(res => {
+      res.data.forEach(movie => {
+        savedList.forEach(sMovie => {
+          if (movie.id === sMovie.id) {
+            const newSavedList = savedList.filter(
+              savedMovie => savedMovie !== sMovie
+            );
+            setSavedList([...newSavedList, movie]);
+          }
+        });
+      });
+    });
+  }, [movies]);
 
   return (
     <>
@@ -40,14 +40,8 @@ const App = () => {
           return <Movie {...props} addToSavedList={addToSavedList} />;
         }}
       />
-      <Route
-      path='/update-movie/:id'
-      component={UpdateMovie}
-      />
-      <Route
-      path='/new-movie'
-      component={NewMovie}
-      />
+      <Route path="/update-movie/:id" component={UpdateMovie} />
+      <Route path="/new-movie" component={NewMovie} />
     </>
   );
 };
